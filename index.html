@@ -5,17 +5,334 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YOMI — Luxury in Every Breath</title>
 <meta name="description" content="YOMI – Premium luxury perfumes imported from Dubai. Shop men, women & unisex fragrances with 15-18 hour longevity.">
-
-<!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<!-- Main Stylesheet -->
-<link rel="stylesheet" href="style.css">
+<style>
+:root {
+  --cream: #F9F7F2;
+  --gold: #B5823D;
+  --gold-light: #d4a85c;
+  --espresso: #4A2C1D;
+  --black: #1A1A1A;
+  --white: #fff;
+  --gray: #888;
+  --border: #e8e2d8;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--black);overflow-x:hidden;}
+
+/* ── ANNOUNCEMENT BAR ── */
+#ann-bar{background:var(--espresso);color:#e8d9c8;font-size:13px;font-weight:400;letter-spacing:.5px;padding:9px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;z-index:100;position:relative;}
+#ann-bar a{color:#e8d9c8;text-decoration:none;}
+#ann-bar a:hover{color:var(--gold-light);}
+.ann-left{text-align:center;flex:1;}
+.ann-right{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+.ann-right span{display:flex;align-items:center;gap:5px;}
+
+/* ── NAVBAR ── */
+#navbar{position:sticky;top:0;background:var(--cream);border-bottom:1px solid var(--border);z-index:999;transition:box-shadow .3s;}
+#navbar.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.08);}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo img{height:48px;object-fit:contain;}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1.1;}
+.nav-logo-text span:first-child{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--black);letter-spacing:3px;}
+.nav-logo-text span:last-child{font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{font-size:13px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--black);text-decoration:none;padding:8px 14px;border-radius:2px;transition:color .2s,background .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:4px;left:14px;right:14px;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-links a:hover::after{transform:scaleX(1);}
+.nav-icons{display:flex;align-items:center;gap:14px;}
+.nav-icon-btn{background:none;border:none;cursor:pointer;color:var(--black);font-size:20px;position:relative;padding:4px;transition:color .2s;}
+.nav-icon-btn:hover{color:var(--gold);}
+#cart-count{position:absolute;top:-4px;right:-6px;background:var(--gold);color:#fff;font-size:10px;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-family:'Jost',sans-serif;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--black);transition:.3s;}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+#mobile-menu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--cream);border-bottom:1px solid var(--border);padding:16px 24px 24px;z-index:998;}
+#mobile-menu a{display:block;font-size:14px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--black);text-decoration:none;padding:12px 0;border-bottom:1px solid var(--border);}
+#mobile-menu a:hover{color:var(--gold);}
+#mobile-menu a:last-child{border-bottom:none;}
+
+/* ── PAGES ── */
+.page{display:none;}
+.page.active{display:block;}
+
+/* ── HERO ── */
+#hero{position:relative;min-height:92vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-image:url('https://res.cloudinary.com/digbzxwkn/image/upload/v1774358815/Banner_Background_wwon5m.png');background-size:cover;background-position:center;transition:transform 8s ease;}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(74,44,29,.65) 0%,rgba(26,26,26,.45) 50%,rgba(181,130,61,.25) 100%);}
+.hero-content{position:relative;z-index:1;text-align:center;padding:0 24px;max-width:760px;}
+.hero-eyebrow{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold-light);margin-bottom:18px;opacity:0;animation:fadeUp .8s .2s forwards;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,6vw,72px);font-weight:600;color:#fff;line-height:1.1;margin-bottom:20px;opacity:0;animation:fadeUp .8s .4s forwards;}
+.hero-subtitle{font-size:16px;font-weight:300;color:rgba(255,255,255,.8);letter-spacing:2px;margin-bottom:40px;opacity:0;animation:fadeUp .8s .6s forwards;}
+.hero-btn{display:inline-block;background:var(--gold);color:#fff;font-size:12px;font-weight:500;letter-spacing:3px;text-transform:uppercase;padding:16px 44px;text-decoration:none;border:none;cursor:pointer;transition:background .3s,transform .2s;opacity:0;animation:fadeUp .8s .8s forwards;}
+.hero-btn:hover{background:var(--gold-light);transform:translateY(-2px);}
+
+/* ── SECTION HEADERS ── */
+.section-header{text-align:center;margin-bottom:50px;}
+.section-label{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,42px);font-weight:600;color:var(--black);}
+.section-divider{width:50px;height:1px;background:var(--gold);margin:16px auto 0;}
+
+/* ── FEATURED PRODUCTS ── */
+#featured{padding:80px 24px;}
+.products-container{max-width:1280px;margin:0 auto;}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:28px;}
+.product-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;cursor:pointer;transition:box-shadow .3s,transform .3s;}
+.product-card:hover{box-shadow:0 12px 40px rgba(0,0,0,.12);transform:translateY(-5px);}
+.product-card-img{position:relative;overflow:hidden;aspect-ratio:1/1;}
+.product-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.product-card:hover .product-card-img img{transform:scale(1.06);}
+.product-badge{position:absolute;top:12px;left:12px;background:var(--gold);color:#fff;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;}
+.product-card-body{padding:18px 20px;}
+.product-card-cat{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.product-card-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--black);margin-bottom:6px;}
+.product-card-price{font-size:13px;color:var(--gray);margin-bottom:14px;}
+.product-card-price strong{color:var(--black);font-size:15px;}
+.size-selector{display:flex;gap:8px;margin-bottom:14px;}
+.size-btn{flex:1;padding:8px 0;border:1px solid var(--border);background:none;cursor:pointer;font-size:12px;font-family:'Jost',sans-serif;letter-spacing:.5px;transition:.2s;}
+.size-btn.selected,.size-btn:hover{border-color:var(--gold);background:var(--gold);color:#fff;}
+.add-cart-btn{width:100%;padding:11px;background:var(--black);color:#fff;border:none;font-size:11px;font-family:'Jost',sans-serif;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:.3s;}
+.add-cart-btn:hover{background:var(--gold);}
+
+/* ── CATEGORY SECTION ── */
+#categories{padding:80px 24px;background:var(--espresso);}
+.cat-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.cat-card{position:relative;overflow:hidden;cursor:pointer;aspect-ratio:3/4;}
+.cat-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.cat-card:hover img{transform:scale(1.06);}
+.cat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(74,44,29,.85) 0%,transparent 60%);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:32px 24px;text-align:center;}
+.cat-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px;}
+.cat-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:#fff;margin-bottom:16px;}
+.cat-btn{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#fff;border:1px solid rgba(255,255,255,.5);padding:9px 24px;transition:.3s;}
+.cat-btn:hover{border-color:var(--gold);background:var(--gold);}
+
+/* ── BEST SELLERS ── */
+#bestsellers{padding:80px 24px;}
+
+/* ── WHY US ── */
+#whyus{padding:80px 24px;background:#fff;}
+.whyus-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center;}
+.why-card{padding:32px 16px;}
+.why-icon{font-size:36px;margin-bottom:16px;display:block;}
+.why-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--black);margin-bottom:8px;}
+.why-text{font-size:13px;color:var(--gray);line-height:1.6;}
+
+/* ── REVIEWS ── */
+#reviews-section{padding:80px 24px;}
+.reviews-inner{max-width:760px;margin:0 auto;}
+.review-info{background:#fff;border:1px solid var(--border);border-radius:4px;padding:20px;text-align:center;margin-bottom:28px;font-size:14px;color:var(--black);line-height:1.7;}
+.reviews-embed{border-radius:4px;overflow:hidden;box-shadow:0 5px 30px rgba(0,0,0,.1);}
+
+/* ── SHOP PAGE ── */
+#shop-page{padding:60px 24px;}
+.shop-inner{max-width:1280px;margin:0 auto;}
+.shop-filters{display:flex;gap:12px;margin-bottom:40px;flex-wrap:wrap;align-items:center;}
+.shop-filter-btn{font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:9px 20px;border:1px solid var(--border);background:none;cursor:pointer;font-family:'Jost',sans-serif;transition:.2s;}
+.shop-filter-btn.active,.shop-filter-btn:hover{background:var(--black);color:#fff;border-color:var(--black);}
+.shop-page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,42px);font-weight:600;color:var(--black);margin-bottom:8px;}
+.shop-page-sub{font-size:13px;color:var(--gray);margin-bottom:36px;}
+#shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:24px;}
+
+/* ── ABOUT PAGE ── */
+#about-page{padding:80px 24px;}
+.about-inner{max-width:900px;margin:0 auto;}
+.about-hero{text-align:center;margin-bottom:60px;}
+.about-hero img{width:120px;margin-bottom:24px;}
+.about-body{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+.about-text h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--espresso);margin-bottom:16px;}
+.about-text p{font-size:14px;line-height:1.9;color:#555;margin-bottom:16px;}
+.about-features{background:var(--espresso);padding:36px;border-radius:4px;color:#e8d9c8;}
+.about-features h3{font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:20px;color:var(--gold-light);}
+.about-features li{font-size:13px;line-height:1.8;list-style:none;padding-left:16px;position:relative;margin-bottom:8px;}
+.about-features li::before{content:'◆';position:absolute;left:0;color:var(--gold);font-size:8px;top:4px;}
+.about-mission{grid-column:1/-1;background:#fff;border:1px solid var(--border);padding:36px;text-align:center;}
+.about-mission h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--black);margin-bottom:16px;}
+.about-mission p{font-size:14px;line-height:1.9;color:#555;max-width:640px;margin:0 auto;}
+
+/* ── CONTACT PAGE ── */
+#contact-page{padding:80px 24px;}
+.contact-inner{max-width:900px;margin:0 auto;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+.contact-info{padding:36px;background:var(--espresso);color:#e8d9c8;border-radius:4px;}
+.contact-info h2{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold-light);margin-bottom:24px;}
+.contact-info-item{display:flex;gap:14px;margin-bottom:20px;align-items:flex-start;}
+.contact-info-icon{font-size:18px;margin-top:2px;}
+.contact-info-text{font-size:13px;line-height:1.7;}
+.contact-info-text a{color:var(--gold-light);text-decoration:none;}
+.contact-form-box{background:#fff;border:1px solid var(--border);padding:36px;border-radius:4px;}
+.contact-form-box h2{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--black);margin-bottom:24px;}
+.form-group{margin-bottom:18px;}
+.form-group label{display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:6px;}
+.form-group input,.form-group textarea{width:100%;padding:12px;border:1px solid var(--border);background:var(--cream);font-family:'Jost',sans-serif;font-size:14px;outline:none;transition:.2s;border-radius:2px;}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--gold);}
+.form-group textarea{resize:vertical;min-height:130px;}
+.contact-submit{width:100%;padding:14px;background:var(--gold);color:#fff;border:none;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;transition:.3s;margin-top:4px;}
+.contact-submit:hover{background:var(--espresso);}
+
+/* ── PRIVACY PAGE ── */
+#privacy-page{padding:80px 24px;}
+.privacy-inner{max-width:800px;margin:0 auto;}
+.privacy-inner h1{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,42px);font-weight:600;color:var(--black);margin-bottom:12px;}
+.privacy-inner .lead{font-size:15px;color:var(--gold);margin-bottom:40px;font-style:italic;}
+.privacy-section{margin-bottom:32px;}
+.privacy-section h2{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--espresso);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.privacy-section p,.privacy-section li{font-size:14px;line-height:1.9;color:#555;}
+.privacy-section ul{padding-left:20px;margin-top:8px;}
+.privacy-section ul li{margin-bottom:6px;}
+
+/* ── FAQs / MODALS ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:#fff;max-width:680px;width:100%;border-radius:4px;overflow:hidden;position:relative;margin:auto;animation:modalIn .35s ease;}
+.modal-close{position:absolute;top:16px;right:20px;font-size:24px;background:none;border:none;cursor:pointer;color:var(--gray);z-index:1;}
+.modal-img{width:100%;max-height:380px;object-fit:cover;}
+.modal-body{padding:28px 32px 36px;}
+.modal-cat{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.modal-name{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--black);margin-bottom:8px;}
+.modal-desc{font-size:14px;line-height:1.8;color:#555;margin-bottom:18px;}
+.modal-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.modal-tag{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;background:var(--cream);border:1px solid var(--border);padding:5px 12px;color:var(--black);}
+.modal-price{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--espresso);margin-bottom:16px;}
+.modal-sizes{display:flex;gap:10px;margin-bottom:20px;}
+.modal-size-btn{flex:1;padding:10px;border:1px solid var(--border);background:none;cursor:pointer;font-size:12px;font-family:'Jost',sans-serif;transition:.2s;}
+.modal-size-btn.sel,.modal-size-btn:hover{background:var(--gold);border-color:var(--gold);color:#fff;}
+.modal-add-btn{width:100%;padding:14px;background:var(--black);color:#fff;border:none;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;transition:.3s;}
+.modal-add-btn:hover{background:var(--gold);}
+
+/* ── CART SIDEBAR ── */
+#cart-sidebar{position:fixed;top:0;right:-400px;width:380px;height:100%;background:#fff;z-index:3000;box-shadow:-5px 0 30px rgba(0,0,0,.2);display:flex;flex-direction:column;transition:right .4s cubic-bezier(.4,0,.2,1);}
+#cart-sidebar.open{right:0;}
+.cart-header{padding:22px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.cart-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;}
+.cart-close-btn{background:none;border:none;font-size:24px;cursor:pointer;color:var(--gray);}
+.cart-items{flex:1;overflow-y:auto;padding:16px 24px;}
+.cart-empty{text-align:center;color:var(--gray);font-size:14px;padding:40px 0;}
+.cart-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
+.cart-item-img{width:72px;height:72px;object-fit:cover;border-radius:2px;border:1px solid var(--border);}
+.cart-item-info{flex:1;}
+.cart-item-name{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--black);}
+.cart-item-size{font-size:11px;color:var(--gray);letter-spacing:1px;margin-bottom:6px;}
+.cart-item-controls{display:flex;align-items:center;gap:8px;}
+.qty-btn{width:26px;height:26px;border:1px solid var(--border);background:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:.2s;}
+.qty-btn:hover{background:var(--gold);color:#fff;border-color:var(--gold);}
+.qty-val{font-size:14px;min-width:20px;text-align:center;}
+.cart-item-price{font-size:14px;font-weight:500;color:var(--espresso);white-space:nowrap;}
+.cart-remove{background:none;border:none;cursor:pointer;color:var(--gray);font-size:18px;transition:.2s;}
+.cart-remove:hover{color:#c0392b;}
+.cart-footer{padding:20px 24px;border-top:1px solid var(--border);}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.cart-total-label{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);}
+.cart-total-val{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--black);}
+.cart-checkout-btn{width:100%;padding:14px;background:var(--gold);color:#fff;border:none;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;transition:.3s;margin-bottom:8px;}
+.cart-checkout-btn:hover{background:var(--espresso);}
+.cart-wa-btn{width:100%;padding:13px;background:#25D366;color:#fff;border:none;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.cart-wa-btn:hover{background:#1da855;}
+
+/* ── CHECKOUT MODAL ── */
+#checkout-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:4000;align-items:center;justify-content:center;padding:20px;}
+#checkout-modal.open{display:flex;}
+.checkout-box{background:#fff;max-width:560px;width:100%;border-radius:4px;overflow:hidden;max-height:90vh;overflow-y:auto;}
+.checkout-header{padding:20px 28px;background:var(--espresso);color:#e8d9c8;}
+.checkout-header h2{font-family:'Cormorant Garamond',serif;font-size:24px;}
+.checkout-body{padding:24px 28px;}
+.checkout-payment{background:var(--cream);border:1px solid var(--border);padding:16px;margin-bottom:20px;border-radius:2px;}
+.checkout-payment p{font-size:13px;line-height:1.7;color:var(--black);}
+.checkout-payment strong{color:var(--espresso);}
+.checkout-order-summary{margin-bottom:18px;background:#f5f0e8;padding:14px;border-radius:2px;}
+.checkout-order-summary h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:8px;}
+#checkout-order-list{font-size:13px;line-height:1.8;color:var(--black);}
+#checkout-order-total{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--espresso);margin-top:8px;}
+.checkout-form .form-group{margin-bottom:14px;}
+.checkout-place-btn{width:100%;padding:15px;background:var(--gold);color:#fff;border:none;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;transition:.3s;margin-bottom:8px;}
+.checkout-place-btn:hover{background:var(--espresso);}
+.checkout-wa-btn{width:100%;padding:13px;background:#25D366;color:#fff;border:none;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.3s;}
+.checkout-wa-btn:hover{background:#1da855;}
+.checkout-close{float:right;background:none;border:none;cursor:pointer;color:#e8d9c8;font-size:22px;}
+
+/* ── FAQ MODAL ── */
+#faq-modal .modal-box{max-width:780px;}
+.faq-item{border-bottom:1px solid var(--border);padding:16px 0;}
+.faq-q{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--black);margin-bottom:8px;}
+.faq-a{font-size:14px;color:#555;line-height:1.7;}
+
+/* ── POLICY MODALS ── */
+.policy-section{margin-bottom:20px;}
+.policy-section h3{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--espresso);margin-bottom:8px;}
+.policy-section p,.policy-section li{font-size:13px;line-height:1.8;color:#555;}
+.policy-section ul{padding-left:18px;margin-top:6px;}
+
+/* ── FOOTER ── */
+footer{background:var(--espresso);color:#e8d9c8;padding:64px 24px 0;}
+.footer-inner{max-width:1280px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;}
+.footer-brand img{height:50px;margin-bottom:12px;}
+.footer-brand p{font-size:13px;line-height:1.8;color:rgba(232,217,200,.7);margin-bottom:20px;}
+.footer-social{display:flex;gap:14px;}
+.social-link{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(255,255,255,.2);border-radius:50%;transition:.2s;color:#e8d9c8;text-decoration:none;}
+.social-link:hover{border-color:var(--gold);background:var(--gold);}
+.social-link svg{width:18px;height:18px;fill:currentColor;}
+.footer-col h4{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-light);margin-bottom:18px;}
+.footer-col a{display:block;font-size:13px;color:rgba(232,217,200,.7);text-decoration:none;margin-bottom:10px;cursor:pointer;transition:.2s;}
+.footer-col a:hover{color:var(--gold-light);}
+.footer-col p{font-size:13px;color:rgba(232,217,200,.7);line-height:1.7;margin-bottom:6px;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding:22px 0;text-align:center;font-size:12px;color:rgba(232,217,200,.4);letter-spacing:.5px;}
+
+/* ── WA FLOAT ── */
+.wa-float{position:fixed;bottom:28px;left:28px;z-index:900;display:flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:12px 20px;border-radius:50px;text-decoration:none;font-size:13px;font-weight:500;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:.3s;}
+.wa-float:hover{background:#1da855;transform:translateY(-2px);}
+.wa-float svg{width:20px;height:20px;fill:#fff;}
+
+/* ── NOTIFICATIONS ── */
+#notif{position:fixed;bottom:28px;right:28px;z-index:9999;display:flex;flex-direction:column;gap:10px;}
+.notif-item{background:var(--espresso);color:#e8d9c8;padding:14px 20px;border-radius:4px;font-size:13px;min-width:220px;max-width:300px;box-shadow:0 4px 20px rgba(0,0,0,.2);animation:slideIn .35s ease;border-left:3px solid var(--gold);}
+.notif-item.success{border-left-color:#27ae60;}
+
+/* ── CART OVERLAY ── */
+#cart-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:2999;}
+#cart-overlay.open{display:block;}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .about-body{grid-template-columns:1fr;}
+  .about-mission{grid-column:1;}
+  .whyus-grid{grid-template-columns:repeat(2,1fr);}
+  .cat-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  #mobile-menu{position:fixed;top:70px;}
+  .cat-grid{grid-template-columns:1fr;}
+  .cat-card{aspect-ratio:16/9;}
+  .contact-grid{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr;}
+  .whyus-grid{grid-template-columns:1fr 1fr;}
+  #ann-bar{font-size:11px;}
+  .ann-right{display:none;}
+  #cart-sidebar{width:100%;}
+}
+@media(max-width:480px){
+  .whyus-grid{grid-template-columns:1fr;}
+  .modal-body{padding:20px;}
+  .checkout-body{padding:18px;}
+}
+</style>
 </head>
 <body>
 
@@ -24,7 +341,7 @@
   <div class="ann-left">🎁 Free Shipping on Orders Above Rs. 5,500 — Pakistan Wide</div>
   <div class="ann-right">
     <span>📞 <a href="tel:+923170799929">+92 317 0799929</a> · <a href="tel:+923315554190">+92 331 5554190</a></span>
-    <span>✉️ <a href="mailto:info@yomiperfume.com">info@yomiperfume.com</a></span>
+    <span>✉️ <a href="mailto:yomi.perfume@gmail.com">yomi.perfume@gmail.com</a></span>
   </div>
 </div>
 
@@ -79,7 +396,7 @@
     <div class="hero-content">
       <p class="hero-eyebrow">✦ Premium Collection from Dubai ✦</p>
       <h1 class="hero-title">Luxury Fragrances<br>That Last All Day</h1>
-      <p class="hero-subtitle">Feel Fresh, Confident &amp; Attractive</p>
+      <p class="hero-subtitle">Feel Fresh, Confident & Attractive</p>
       <button class="hero-btn" onclick="showPage('shop')">Shop Now</button>
     </div>
   </section>
@@ -111,7 +428,7 @@
         <div class="why-card">
           <span class="why-icon">🚚</span>
           <div class="why-title">Fast Delivery</div>
-          <p class="why-text">Swift &amp; reliable delivery across all of Pakistan with tracking provided.</p>
+          <p class="why-text">Swift & reliable delivery across all of Pakistan with tracking provided.</p>
         </div>
       </div>
     </div>
@@ -198,7 +515,7 @@
     </div>
   </section>
 
-</div><!-- end #page-home -->
+</div><!-- end home page -->
 
 <!-- ═══════════════ SHOP PAGE ═══════════════ -->
 <div id="page-shop" class="page">
@@ -271,10 +588,10 @@
       <div class="contact-grid">
         <div class="contact-info">
           <h2>YOMI — Luxury in every breath</h2>
-          <p style="font-size:13px;margin-bottom:24px;line-height:1.8;">We're here to help you. Whether you have a question about our perfumes, your order, or anything else, feel free to reach out.</p>
+          <p style="font-size:13px;margin-bottom:24px;line-height:1.8;">We're here to help you. Whether you have a question about our perfumes, your order, or anything else, feel free to reach out. Our team will get back to you as soon as possible.</p>
           <div class="contact-info-item">
             <span class="contact-info-icon">📧</span>
-            <div class="contact-info-text"><strong>Email</strong><br><a href="mailto:info@yomiperfume.com">info@yomiperfume.com</a></div>
+            <div class="contact-info-text"><strong>Email</strong><br><a href="mailto:yomi.perfume@gmail.com">yomi.perfume@gmail.com</a></div>
           </div>
           <div class="contact-info-item">
             <span class="contact-info-icon">📱</span>
@@ -293,7 +610,7 @@
             <div class="form-group"><label>Message</label><textarea id="c-msg" placeholder="How can we help you?"></textarea></div>
             <button class="contact-submit" onclick="sendContactForm()">Send Message</button>
           </div>
-          <p style="text-align:center;margin-top:14px;font-size:12px;color:var(--gray);">Or email us directly at <a href="mailto:info@yomiperfume.com" style="color:var(--gold);">info@yomiperfume.com</a></p>
+          <p style="text-align:center;margin-top:14px;font-size:12px;color:var(--gray);">Or email us directly at <a href="mailto:yomi.perfume@gmail.com" style="color:var(--gold);">yomi.perfume@gmail.com</a></p>
         </div>
       </div>
     </div>
@@ -320,7 +637,7 @@
       </div>
       <div class="privacy-section">
         <h2>Data Protection &amp; Security</h2>
-        <p>Your data is safe with us. We take proper security measures to protect your personal information from unauthorized access, misuse, or loss.</p>
+        <p>Your data is safe with us. We take proper security measures to protect your personal information from unauthorized access, misuse, or loss. We follow standard practices to keep your data secure and confidential.</p>
       </div>
       <div class="privacy-section">
         <h2>No Selling or Sharing of Data</h2>
@@ -329,7 +646,7 @@
       </div>
       <div class="privacy-section">
         <h2>Cookies</h2>
-        <p>Our website may use basic cookies to improve your browsing experience and understand how visitors use our site.</p>
+        <p>Our website may use basic cookies to improve your browsing experience. These cookies help us understand how visitors use our site and allow us to improve our services.</p>
       </div>
       <div class="privacy-section">
         <h2>Your Rights</h2>
@@ -337,8 +654,12 @@
         <p style="margin-top:10px;">You can contact us anytime regarding your data.</p>
       </div>
       <div class="privacy-section">
+        <h2>Changes to This Policy</h2>
+        <p>YOMI may update this Privacy Policy from time to time. Any changes will be posted on this page.</p>
+      </div>
+      <div class="privacy-section">
         <h2>Contact Us</h2>
-        <p>If you have any questions about this Privacy Policy, feel free to <a href="#" onclick="showPage('contact')" style="color:var(--gold);">contact us</a>.</p>
+        <p>If you have any questions about this Privacy Policy or your data, feel free to <a href="#" onclick="showPage('contact')" style="color:var(--gold);">contact us</a>.</p>
       </div>
       <p style="text-align:center;margin-top:40px;font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--espresso);font-style:italic;">YOMI — Luxury in every breath</p>
     </div>
@@ -353,12 +674,15 @@
         <img src="https://res.cloudinary.com/digbzxwkn/image/upload/v1775307839/Untitled_design__2_-removebg-preview_eypquo.png" alt="YOMI">
         <p>Premium luxury perfumes imported directly from Dubai. Crafted for those who appreciate the finer things in life.</p>
         <div class="footer-social">
+          <!-- Instagram -->
           <a class="social-link" href="https://www.instagram.com/yomi.perfume?igsh=MXcyNWFhdW45bm04bw==" target="_blank" title="Instagram">
             <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           </a>
+          <!-- Facebook -->
           <a class="social-link" href="https://www.facebook.com/share/1AGaHTEFeg/" target="_blank" title="Facebook">
             <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           </a>
+          <!-- WhatsApp -->
           <a class="social-link" href="https://wa.me/923170799929" target="_blank" title="WhatsApp">
             <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           </a>
@@ -380,7 +704,7 @@
       </div>
       <div class="footer-col">
         <h4>Contact Info</h4>
-        <p>📧 <a href="mailto:info@yomiperfume.com" style="color:rgba(232,217,200,.7);text-decoration:none;">info@yomiperfume.com</a></p>
+        <p>📧 <a href="mailto:yomi.perfume@gmail.com" style="color:rgba(232,217,200,.7);text-decoration:none;">yomi.perfume@gmail.com</a></p>
         <p>📞 <a href="tel:+923170799929" style="color:rgba(232,217,200,.7);text-decoration:none;">+92 317 0799929</a></p>
         <p>📞 <a href="tel:+923315554190" style="color:rgba(232,217,200,.7);text-decoration:none;">+92 331 5554190</a></p>
         <p>📍 Pakistan</p>
@@ -401,7 +725,7 @@
 <!-- Notifications -->
 <div id="notif"></div>
 
-<!-- CART OVERLAY + SIDEBAR -->
+<!-- CART SIDEBAR -->
 <div id="cart-overlay" onclick="toggleCart()"></div>
 <div id="cart-sidebar">
   <div class="cart-header">
@@ -482,9 +806,9 @@
     <div class="modal-body">
       <div class="modal-cat">Support</div>
       <div class="modal-name" style="margin-bottom:24px;">Frequently Asked Questions</div>
-      <div class="faq-item"><div class="faq-q">Do you offer Cash on Delivery (COD)?</div><div class="faq-a">Currently, we do not offer COD. Please use EasyPaisa or JazzCash (03170799929) at checkout.</div></div>
-      <div class="faq-item"><div class="faq-q">How long will it take to receive my order?</div><div class="faq-a">Shipping times may vary depending on your location. You will receive tracking details once your order is shipped.</div></div>
-      <div class="faq-item"><div class="faq-q">How can I contact customer support?</div><div class="faq-a">Email us at <strong>info@yomiperfume.com</strong> or WhatsApp at <strong>+92 317 0799929</strong> or <strong>+92 331 5554190</strong>.</div></div>
+      <div class="faq-item"><div class="faq-q">Do you offer Cash on Delivery (COD)?</div><div class="faq-a">Currently, we do not offer COD. Please use online payment methods at checkout via EasyPaisa or JazzCash (03170799929).</div></div>
+      <div class="faq-item"><div class="faq-q">How long will it take to receive my order?</div><div class="faq-a">Shipping times may vary depending on your location and order size. You will receive tracking details once your order is shipped.</div></div>
+      <div class="faq-item"><div class="faq-q">How can I contact customer support?</div><div class="faq-a">You can reach us via email at <strong>yomi.perfume@gmail.com</strong> or WhatsApp at <strong>+92 317 0799929</strong> or <strong>+92 331 5554190</strong>.</div></div>
       <div class="faq-item"><div class="faq-q">What sizes are available?</div><div class="faq-a">All perfumes are available in two sizes: 30ml (Rs. 2,200) and 50ml (Rs. 3,500).</div></div>
       <div class="faq-item"><div class="faq-q">Where are your perfumes sourced from?</div><div class="faq-a">All YOMI perfumes are directly imported from Dubai, ensuring authenticity and premium quality.</div></div>
     </div>
@@ -521,18 +845,314 @@
       <div class="policy-section">
         <ul>
           <li>Returns are accepted within 1–2 days of delivery.</li>
-          <li>To request a return, provide clear photo or video evidence showing the issue (e.g., damaged bottle, wrong product).</li>
-          <li>Only products meeting these criteria are eligible for a replacement or refund.</li>
+          <li>To request a return, you must provide clear photo or video evidence showing the issue with the product (e.g., damaged bottle, wrong product).</li>
+          <li>Only products that meet these criteria will be eligible for a replacement or refund.</li>
           <li>Refunds (if applicable) will be processed after verification of the evidence.</li>
           <li>We currently do not accept returns without proof.</li>
         </ul>
-        <p style="margin-top:14px;">Contact us at <strong>info@yomiperfume.com</strong> to initiate a return.</p>
+        <p style="margin-top:14px;">Contact us at <strong>yomi.perfume@gmail.com</strong> to initiate a return.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Main Application Script -->
-<script src="app.js"></script>
+<script>
+// ═══ EMAILJS INIT ═══
+emailjs.init("pHIPmh4IxDdEVW6kN");
+
+// ═══ ALL PRODUCTS ═══
+const ALL_PRODUCTS = [
+  {id:1,name:"Y'Prision",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350437/yprision__mvk9q1.jpg",desc:"💼 Y' Prision (Men)\n\nFresh and modern, Y' Prision delivers citrus energy with a clean finish.",type:"Fresh, Citrus",bestFor:"Daily",longevity:"15–18 Hours",featured:true,bestseller:true},
+  {id:2,name:"Fantasia",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350420/Fantasia_2_whkzug.jpg",desc:"🌌 Fantasia (Men)\n\nStep into a world of warmth and mystery with Fantasia. Its smooth blend creates a captivating and memorable experience, perfect for evenings.",type:"Sweet, Warm, Spicy",bestFor:"Evening, Casual",longevity:"15–18 Hours",featured:true},
+  {id:3,name:"Black Oud",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350412/Black_Oud_2_m9kcsu.jpg",desc:"🔥 Black Oud (Men)\n\nBold and intense, Black Oud features deep oud with smoky and woody notes, creating a strong masculine presence.",type:"Oud, Smoky, Woody",bestFor:"Night, Winter",longevity:"15–18 Hours",featured:true},
+  {id:4,name:"Blue Oud",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350413/Blue_Oud_2_ktwhvq.jpg",desc:"🌊 Blue Oud (Men)\n\nA fresh take on oud, Blue Oud combines airy freshness with rich woody depth, making it bold yet wearable daily.",type:"Fresh Oud, Woody, Aquatic",bestFor:"Daily, Evening",longevity:"15–18 Hours",featured:true},
+  {id:5,name:"Burhan",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350415/Burhan_2_wot0so.jpg",desc:"💼 Burhan (Men)\n\nStrong and masculine, Burhan combines woody and spicy notes to create a confident and professional aura.",type:"Woody, Spicy, Warm",bestFor:"Office, Formal",longevity:"15–18 Hours",featured:true},
+  {id:6,name:"Tarteel",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350434/Tarteel__e8odgo.jpg",desc:"🌿 Tarteel (Men)\n\nFresh and citrusy, Tarteel delivers a light and uplifting scent perfect for daily wear.",type:"Fresh, Citrus",bestFor:"Daytime, Casual",longevity:"15–18 Hours",featured:true},
+  {id:7,name:"Golden Dust",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350420/Golden_dust_2_ezguyj.jpg",desc:"✨ Golden Dust (Men)\n\nWarm and luxurious, Golden Dust blends sweet amber notes into a rich and glowing fragrance.",type:"Warm, Sweet, Amber",bestFor:"Evening",longevity:"15–18 Hours",featured:true},
+  {id:8,name:"Mukhalat Al Emarat",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350413/Mukhalat_al_Emarat__zedhga.jpg",desc:"🕌 Mukhalat Al Emarat (Men)\n\nA traditional Arabic fragrance with rich oud and spices, Mukhalat Al Emarat is bold and powerful.",type:"Oud, Oriental, Spicy",bestFor:"Night",longevity:"15–18 Hours"},
+  {id:9,name:"Shay Oud",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350428/shay_Oud__d049vd.jpg",desc:"🌫️ Shay Oud (Men)\n\nDark and intense, Shay Oud delivers a smoky and powerful oud fragrance for bold personalities.",type:"Oud, Smoky",bestFor:"Night",longevity:"15–18 Hours"},
+  {id:10,name:"Rasheeqa",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350425/Rasheeqa__njp7nf.jpg",desc:"💎 Rasheeqa (Men)\n\nFresh and musky, Rasheeqa gives a clean and professional feel perfect for daily use.",type:"Fresh, Musky",bestFor:"Office",longevity:"15–18 Hours"},
+  {id:11,name:"Oud Marcouja",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350418/Oud_marcouja_2_jdgsad.jpg",desc:"🌲 Oud Marcouja (Men)\n\nEarthy and deep, Oud Marcouja offers a strong woody oud scent for classic fragrance lovers.",type:"Woody, Oud",bestFor:"Evening",longevity:"15–18 Hours"},
+  {id:12,name:"Oud Malaki",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350418/Oud_malaki_bfadf507-ef07-4b0f-9abe-075715959bef_PhotoGrid_-_Copy-ezremove_vghyjn.png",desc:"👑 Oud Malaki (Men)\n\nA premium blend of oud and spices, Oud Malaki delivers luxury and power in every spray.",type:"Oud, Spicy",bestFor:"Night",longevity:"15–18 Hours"},
+  {id:13,name:"Baccarat",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350415/Baccarat_b6b73261-37f8-4255-8b9f-71950d6b6cee_PhotoGrid-ezremove_ga5elm.png",desc:"💎 Baccarat (Men)\n\nSweet and elegant, Baccarat blends amber and woody notes into a luxurious fragrance.",type:"Sweet, Amber",bestFor:"Luxury Wear",longevity:"15–18 Hours"},
+  {id:14,name:"Sigar",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350435/Sigar-ezremove_kqtoyx.png",desc:"🚬 Sigar (Men)\n\nSmoky and bold, Sigar features tobacco-inspired notes with a strong woody base.",type:"Smoky, Woody",bestFor:"Night",longevity:"15–18 Hours"},
+  {id:15,name:"4 O'Clock",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350418/4_0_clock-ezremove_ireojo.png",desc:"⏰ 4 O'Clock (Men)\n\nWarm and spicy, 4 O'Clock is perfect for relaxed evenings.",type:"Warm, Spicy",bestFor:"Evening",longevity:"15–18 Hours"},
+  {id:16,name:"6 AM",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350416/6_AM-ezremove_cevxca.png",desc:"🌅 6 AM (Men)\n\nLight and refreshing, 6 AM is made for a fresh start every day.",type:"Fresh, Clean",bestFor:"Morning",longevity:"15–18 Hours"},
+  {id:17,name:"Raghba",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350432/Raghba-ezremove_bgyort.png",desc:"🍯 Raghba (Men)\n\nSweet and warm, Raghba blends vanilla and oud for a rich scent.",type:"Sweet, Oud",bestFor:"Evening",longevity:"15–18 Hours"},
+  {id:18,name:"Rauvage",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350436/Rauvage-ezremove_uirqnv.png",desc:"⚡ Rauvage (Men)\n\nFresh and spicy, Rauvage delivers a bold and modern masculine scent.",type:"Fresh, Citrus, Spicy",bestFor:"Daily",longevity:"15–18 Hours"},
+  {id:19,name:"Scentury",cat:"Men",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350430/Scentury_2_gjhdbh.png",desc:"🌿 Scentury (Men)\n\nClean and fresh, Scentury offers a simple yet attractive musky fragrance.",type:"Fresh, Musky",bestFor:"Daily",longevity:"15–18 Hours"},
+  {id:20,name:"Yaqoot",cat:"Women",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350434/Yaqoot__sxd8hr.jpg",desc:"🌺 Yaqoot (Women)\n\nElegant and soft, Yaqoot blends floral sweetness into a graceful fragrance that enhances your natural charm.",type:"Floral, Sweet",bestFor:"Daily Wear",longevity:"15–18 Hours",featured:true},
+  {id:21,name:"Burberry Women",cat:"Women",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350411/Burburry_Women_2_plnfhm.jpg",desc:"🌸 Burberry Women (Women)\n\nA soft blend of fruity and floral notes, Burberry Women delivers a classy and elegant everyday fragrance.",type:"Fruity, Floral",bestFor:"Daily, Office",longevity:"15–18 Hours",featured:true,bestseller:true},
+  {id:22,name:"Pink Shiffon",cat:"Women",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350422/Pink_Shiffon_2_chhzuf.jpg",desc:"🌸 Pink Chiffon (Women)\n\nSweet, soft, and feminine — Pink Chiffon combines floral notes with a powdery finish for a charming scent.",type:"Sweet, Floral, Powdery",bestFor:"Casual, Daily",longevity:"15–18 Hours",featured:true},
+  {id:23,name:"Sultanah",cat:"Women",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350436/Sultanah-ezremove_thuxcv.png",desc:"🌹 Sultanah (Women)\n\nFloral and oriental, Sultanah gives a royal and elegant fragrance.",type:"Floral, Oriental",bestFor:"Events",longevity:"15–18 Hours"},
+  {id:24,name:"Black Mama",cat:"Women",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350423/Black_Mama-ezremove_kiil7z.png",desc:"💃 Black Mama (Women)\n\nFruity and bold, Black Mama is perfect for confident women.",type:"Sweet, Fruity",bestFor:"Events",longevity:"15–18 Hours"},
+  {id:25,name:"Imperial Valley",cat:"Unisex",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350422/Imperial_Valley_2_fyixgf.jpg",desc:"🏞️ Imperial Valley (Unisex)\n\nBalanced and refined, Imperial Valley offers a fresh woody scent with a touch of sweetness for everyday elegance.",type:"Fresh, Woody, Slightly Sweet",bestFor:"All Occasions",longevity:"15–18 Hours",featured:true,bestseller:true},
+  {id:26,name:"Ralf",cat:"Unisex",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350435/Ralf_fca1c11c-59ee-4d7f-92f3-6bbf91336ff9_PhotoGrid-ezremove_gw5pm7.png",desc:"💎 Ralf (Unisex)\n\nClean and modern, Ralf offers a smooth and refreshing scent perfect for everyday elegance.",type:"Fresh, Clean",bestFor:"Office",longevity:"15–18 Hours"},
+  {id:27,name:"Joop Jump",cat:"Unisex",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350425/Joop_Jump_393b00bc-bfc0-4068-9eff-d5cdc9052cd0_PhotoGrid-ezremove_ovr1jv.png",desc:"🌿 Joop Jump (Unisex)\n\nEnergetic and vibrant, Joop Jump mixes citrus freshness with sweetness for a lively scent.",type:"Fresh, Sweet",bestFor:"Casual",longevity:"15–18 Hours"},
+  {id:28,name:"Creed Aventus",cat:"Unisex",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350427/Creed_Aventus_10cd0874-14e0-4ba0-95e7-f159affcc48e_PhotoGrid-ezremove_xfofbr.png",desc:"👑 Creed Aventus (Unisex)\n\nA powerful mix of fruity freshness and smoky woods, Creed Aventus is a true signature scent.",type:"Fruity, Woody, Smoky",bestFor:"Events",longevity:"15–18 Hours",bestseller:true},
+  {id:29,name:"Don't Be Shy",cat:"Unisex",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350431/Don_t_be_shy_2_rfmwkp.png",desc:"🍬 Don't Be Shy (Unisex)\n\nSweet and playful, Don't Be Shy blends vanilla and floral notes.",type:"Sweet, Vanilla",bestFor:"Casual",longevity:"15–18 Hours"},
+  {id:30,name:"Cool Water",cat:"Unisex",img:"https://res.cloudinary.com/digbzxwkn/image/upload/v1774350422/Cool_Water_2_ofs4xg.png",desc:"🌊 Cool Water (Unisex)\n\nRefreshing and aquatic, Cool Water delivers a cool, clean scent perfect for everyday freshness.",type:"Fresh, Aquatic",bestFor:"Summer, Daily",longevity:"15–18 Hours"},
+];
+
+// ═══ CART STATE ═══
+let cart = [];
+let currentProduct = null;
+let currentModalSize = {size:'50ml',price:3500};
+
+// ═══ PAGE NAVIGATION ═══
+function showPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(page==='shop') renderShopGrid(ALL_PRODUCTS);
+}
+
+function scrollToBestsellers(){
+  showPage('home');
+  setTimeout(()=>{
+    const el=document.getElementById('bestsellers');
+    if(el) el.scrollIntoView({behavior:'smooth'});
+  },100);
+}
+
+// ═══ MOBILE MENU ═══
+let mobileOpen=false;
+function toggleMobile(){
+  mobileOpen=!mobileOpen;
+  document.getElementById('hamburger').classList.toggle('open',mobileOpen);
+  const m=document.getElementById('mobile-menu');
+  m.style.display=mobileOpen?'block':'none';
+}
+
+// ═══ NAVBAR SCROLL ═══
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);
+});
+
+// ═══ PRODUCT CARD BUILDER ═══
+function buildCard(p, showQuick=true){
+  return `<div class="product-card" onclick="openProduct(${p.id})">
+    <div class="product-card-img">
+      <img src="${p.img}" alt="${p.name}" loading="lazy">
+      ${p.bestseller?'<div class="product-badge">Best Seller</div>':''}
+    </div>
+    <div class="product-card-body">
+      <div class="product-card-cat">${p.cat}</div>
+      <div class="product-card-name">${p.name}</div>
+      <div class="product-card-price">From <strong>Rs. 2,200</strong> · Rs. 3,500</div>
+      <div class="size-selector">
+        <button class="size-btn selected" onclick="event.stopPropagation();selectCardSize(this,'50ml',3500,${p.id})">50ml</button>
+        <button class="size-btn" onclick="event.stopPropagation();selectCardSize(this,'30ml',2200,${p.id})">30ml</button>
+      </div>
+      <button class="add-cart-btn" onclick="event.stopPropagation();addToCartFromCard(${p.id},this)">Add to Cart</button>
+    </div>
+  </div>`;
+}
+
+// ═══ RENDER GRIDS ═══
+function renderFeatured(){
+  const featured=ALL_PRODUCTS.filter(p=>p.featured).slice(0,8);
+  document.getElementById('featured-grid').innerHTML=featured.map(p=>buildCard(p)).join('');
+}
+function renderBestsellers(){
+  const bs=ALL_PRODUCTS.filter(p=>p.bestseller);
+  document.getElementById('bestsellers-grid').innerHTML=bs.map(p=>buildCard(p)).join('');
+}
+function renderShopGrid(products){
+  document.getElementById('shop-grid').innerHTML=products.length
+    ?products.map(p=>buildCard(p)).join('')
+    :'<p style="color:var(--gray);grid-column:1/-1;">No products found.</p>';
+}
+
+// ═══ SHOP FILTER ═══
+let activeFilterEl=null;
+function filterByCategory(cat, el){
+  document.querySelectorAll('.shop-filter-btn').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const filtered=cat==='All'?ALL_PRODUCTS:ALL_PRODUCTS.filter(p=>p.cat===cat);
+  renderShopGrid(filtered);
+}
+
+// ═══ CARD SIZE SELECTION ═══
+const cardSizes={};
+function selectCardSize(btn,size,price,id){
+  const card=btn.closest('.product-card-body');
+  card.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  cardSizes[id]={size,price};
+}
+function addToCartFromCard(id,btn){
+  const p=ALL_PRODUCTS.find(x=>x.id===id);
+  const sizeInfo=cardSizes[id]||{size:'50ml',price:3500};
+  addToCart(p,sizeInfo.size,sizeInfo.price);
+}
+
+// ═══ PRODUCT MODAL ═══
+function openProduct(id){
+  const p=ALL_PRODUCTS.find(x=>x.id===id);
+  currentProduct=p;
+  currentModalSize={size:'50ml',price:3500};
+  document.getElementById('modal-img').src=p.img;
+  document.getElementById('modal-img').alt=p.name;
+  document.getElementById('modal-cat').textContent=p.cat;
+  document.getElementById('modal-name').textContent=p.name;
+  document.getElementById('modal-desc').textContent=p.desc;
+  document.getElementById('modal-tags').innerHTML=
+    `<span class="modal-tag">🌸 ${p.type}</span><span class="modal-tag">⏰ ${p.longevity}</span><span class="modal-tag">✨ ${p.bestFor}</span>`;
+  document.getElementById('modal-price').textContent='Rs. 2,200 (30ml) · Rs. 3,500 (50ml)';
+  document.querySelectorAll('.modal-size-btn').forEach((b,i)=>b.classList.toggle('sel',i===0));
+  openModal('product-modal');
+}
+function selectModalSize(btn){
+  document.querySelectorAll('.modal-size-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  currentModalSize={size:btn.dataset.size,price:parseInt(btn.dataset.price)};
+}
+function addModalToCart(){
+  if(!currentProduct)return;
+  addToCart(currentProduct,currentModalSize.size,currentModalSize.price);
+  closeModal('product-modal');
+}
+function closeProductModal(e){if(e.target===e.currentTarget)closeModal(e.currentTarget.id);}
+
+// ═══ CART FUNCTIONS ═══
+function addToCart(product,size,price){
+  const key=`${product.id}-${size}`;
+  const existing=cart.find(i=>i.key===key);
+  if(existing){existing.qty++;} 
+  else {cart.push({key,id:product.id,name:product.name,img:product.img,size,price,qty:1});}
+  updateCartUI();
+  showNotif(`✓ ${product.name} (${size}) added to cart`);
+}
+function removeFromCart(key){
+  cart=cart.filter(i=>i.key!==key);
+  updateCartUI();
+}
+function updateQty(key,delta){
+  const item=cart.find(i=>i.key===key);
+  if(!item)return;
+  item.qty+=delta;
+  if(item.qty<=0) removeFromCart(key);
+  else updateCartUI();
+}
+function updateCartUI(){
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const count=cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cart-count').textContent=count;
+  document.getElementById('cart-total').textContent=total.toLocaleString();
+  const container=document.getElementById('cart-items-container');
+  if(cart.length===0){
+    container.innerHTML='<div class="cart-empty">Your cart is empty.<br>Add some fragrances!</div>';
+  } else {
+    container.innerHTML=cart.map(item=>`
+      <div class="cart-item">
+        <img class="cart-item-img" src="${item.img}" alt="${item.name}">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-size">${item.size}</div>
+          <div class="cart-item-controls">
+            <button class="qty-btn" onclick="updateQty('${item.key}',-1)">−</button>
+            <span class="qty-val">${item.qty}</span>
+            <button class="qty-btn" onclick="updateQty('${item.key}',1)">+</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+          <span class="cart-item-price">Rs. ${(item.price*item.qty).toLocaleString()}</span>
+          <button class="cart-remove" onclick="removeFromCart('${item.key}')">🗑</button>
+        </div>
+      </div>`).join('');
+  }
+}
+function toggleCart(){
+  const sidebar=document.getElementById('cart-sidebar');
+  const overlay=document.getElementById('cart-overlay');
+  const isOpen=sidebar.classList.contains('open');
+  sidebar.classList.toggle('open',!isOpen);
+  overlay.classList.toggle('open',!isOpen);
+}
+
+// ═══ WHATSAPP ORDER ═══
+function sendCartViaWhatsApp(){
+  if(cart.length===0){showNotif('Your cart is empty!');return;}
+  const orderLines=cart.map(i=>`• ${i.name} (${i.size}) x${i.qty} = Rs. ${(i.price*i.qty).toLocaleString()}`).join('\n');
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const msg=`🛒 *New Order from YOMI Website*\n\n${orderLines}\n\n*Total: Rs. ${total.toLocaleString()}*\n\nPlease confirm my order!`;
+  window.open(`https://wa.me/923170799929?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// ═══ CHECKOUT ═══
+function openCheckout(){
+  if(cart.length===0){showNotif('Your cart is empty!');return;}
+  const orderLines=cart.map(i=>`${i.name} (${i.size}) x${i.qty}`).join('<br>');
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('checkout-order-list').innerHTML=orderLines;
+  document.getElementById('checkout-order-total').innerHTML=`<strong>Total: Rs. ${total.toLocaleString()}</strong>`;
+  document.getElementById('checkout-modal').classList.add('open');
+}
+function closeCheckout(){
+  document.getElementById('checkout-modal').classList.remove('open');
+}
+
+function placeOrder(){
+  const name=document.getElementById('o-name').value.trim();
+  const phone=document.getElementById('o-phone').value.trim();
+  const phone2=document.getElementById('o-phone2').value.trim();
+  const email=document.getElementById('o-email').value.trim();
+  const address=document.getElementById('o-address').value.trim();
+  if(!name||!phone||!email||!address){showNotif('Please fill all required fields.');return;}
+  const order=cart.map(i=>`${i.name} (${i.size}) x${i.qty}`).join(', ');
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const btn=document.querySelector('.checkout-place-btn');
+  btn.textContent='Sending…';btn.disabled=true;
+  emailjs.send("service_bqn3nkk","template_0urzrix",{name,phone,phone2,email,address,order,total:`Rs. ${total.toLocaleString()}`})
+    .then(()=>{
+      showNotif('✓ Order placed successfully! We will contact you soon.','success');
+      cart=[];updateCartUI();closeCheckout();toggleCart();
+      document.getElementById('o-name').value='';document.getElementById('o-phone').value='';
+      document.getElementById('o-phone2').value='';document.getElementById('o-email').value='';
+      document.getElementById('o-address').value='';
+      btn.textContent='✓ Place Order';btn.disabled=false;
+    }).catch(()=>{
+      showNotif('Error sending order. Please try via WhatsApp.');
+      btn.textContent='✓ Place Order';btn.disabled=false;
+    });
+}
+
+// ═══ CONTACT FORM ═══
+function sendContactForm(){
+  const name=document.getElementById('c-name').value.trim();
+  const email=document.getElementById('c-email').value.trim();
+  const msg=document.getElementById('c-msg').value.trim();
+  if(!name||!email||!msg){showNotif('Please fill all fields.');return;}
+  emailjs.send("service_bqn3nkk","template_0urzrix",{name,email,message:msg,order:'Contact Form',total:'N/A',phone:'N/A',phone2:'N/A',address:'N/A'})
+    .then(()=>{
+      showNotif('✓ Message sent! We\'ll reply soon.','success');
+      document.getElementById('c-name').value='';document.getElementById('c-email').value='';document.getElementById('c-msg').value='';
+    }).catch(()=>showNotif('Failed to send. Email us directly.'));
+}
+
+// ═══ MODAL HELPERS ═══
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+// ═══ NOTIFICATIONS ═══
+function showNotif(msg,type=''){
+  const container=document.getElementById('notif');
+  const el=document.createElement('div');
+  el.className='notif-item'+(type?' '+type:'');
+  el.textContent=msg;
+  container.appendChild(el);
+  setTimeout(()=>el.remove(),3500);
+}
+
+// ═══ INIT ═══
+renderFeatured();
+renderBestsellers();
+
+// Close checkout on overlay click
+document.getElementById('checkout-modal').addEventListener('click',function(e){
+  if(e.target===this)closeCheckout();
+});
+</script>
 </body>
 </html>
