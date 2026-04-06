@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YOMI — Luxury in Every Breath</title>
+<meta name="description" content="YOMI – Premium luxury perfumes imported from Dubai. Shop men, women & unisex fragrances with 15-18 hour longevity.">
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Main Stylesheet -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div id="ann-bar">
+  <div class="ann-left">🎁 Free Shipping on Orders Above Rs. 5,500 — Pakistan Wide</div>
+  <div class="ann-right">
+    <span>📞 <a href="tel:+923170799929">+92 317 0799929</a> · <a href="tel:+923315554190">+92 331 5554190</a></span>
+    <span>✉️ <a href="mailto:info@yomiperfume.com">info@yomiperfume.com</a></span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" onclick="showPage('home')">
+      <img src="https://res.cloudinary.com/digbzxwkn/image/upload/v1775307839/Untitled_design__2_-removebg-preview_eypquo.png" alt="YOMI Logo">
+      <div class="nav-logo-text">
+        <span>YOMI</span>
+        <span>Luxury In Every Breath</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#" onclick="showPage('home')">Home</a>
+      <a href="#" onclick="showPage('shop')">Shop</a>
+      <a href="#" onclick="showPage('shop');filterByCategory('Men')">Men</a>
+      <a href="#" onclick="showPage('shop');filterByCategory('Women')">Women</a>
+      <a href="#" onclick="showPage('shop');filterByCategory('Unisex')">Unisex</a>
+      <a href="#" onclick="scrollToBestsellers()">Best Sellers</a>
+      <a href="#" onclick="showPage('about')">About Us</a>
+      <a href="#" onclick="showPage('contact')">Contact</a>
+    </div>
+    <div class="nav-icons">
+      <button class="nav-icon-btn" onclick="toggleCart()" title="Cart">
+        🛒
+        <span id="cart-count">0</span>
+      </button>
+    </div>
+    <div class="hamburger" id="hamburger" onclick="toggleMobile()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <div id="mobile-menu">
+    <a href="#" onclick="showPage('home');toggleMobile()">Home</a>
+    <a href="#" onclick="showPage('shop');toggleMobile()">Shop</a>
+    <a href="#" onclick="showPage('shop');filterByCategory('Men');toggleMobile()">Men Perfumes</a>
+    <a href="#" onclick="showPage('shop');filterByCategory('Women');toggleMobile()">Women Perfumes</a>
+    <a href="#" onclick="showPage('shop');filterByCategory('Unisex');toggleMobile()">Unisex</a>
+    <a href="#" onclick="scrollToBestsellers();toggleMobile()">Best Sellers</a>
+    <a href="#" onclick="showPage('about');toggleMobile()">About Us</a>
+    <a href="#" onclick="showPage('contact');toggleMobile()">Contact</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">✦ Premium Collection from Dubai ✦</p>
+      <h1 class="hero-title">Luxury Fragrances<br>That Last All Day</h1>
+      <p class="hero-subtitle">Feel Fresh, Confident &amp; Attractive</p>
+      <button class="hero-btn" onclick="showPage('shop')">Shop Now</button>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="whyus">
+    <div class="products-container">
+      <div class="section-header">
+        <span class="section-label">Our Promise</span>
+        <h2 class="section-title">Why Choose YOMI?</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="whyus-grid">
+        <div class="why-card">
+          <span class="why-icon">⏳</span>
+          <div class="why-title">Long Lasting</div>
+          <p class="why-text">15–18 hours of captivating fragrance that stays with you throughout the day and night.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">🧪</span>
+          <div class="why-title">Premium Quality</div>
+          <p class="why-text">Crafted with the finest quality oils sourced directly from trusted Dubai suppliers.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">💰</span>
+          <div class="why-title">Affordable Prices</div>
+          <p class="why-text">Luxury fragrances at accessible prices. Premium scents shouldn't break the bank.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">🚚</span>
+          <div class="why-title">Fast Delivery</div>
+          <p class="why-text">Swift &amp; reliable delivery across all of Pakistan with tracking provided.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCTS -->
+  <section id="featured">
+    <div class="products-container">
+      <div class="section-header">
+        <span class="section-label">Explore the Collection</span>
+        <h2 class="section-title">Featured Products</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="products-grid" id="featured-grid"></div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section id="categories">
+    <div class="products-container">
+      <div class="section-header" style="margin-bottom:40px;">
+        <span class="section-label" style="color:var(--gold-light);">Browse By</span>
+        <h2 class="section-title" style="color:#fff;">Shop by Category</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-card" onclick="showPage('shop');filterByCategory('Men')">
+          <img src="https://res.cloudinary.com/digbzxwkn/image/upload/v1774350412/Black_Oud_2_m9kcsu.jpg" alt="Men">
+          <div class="cat-overlay">
+            <span class="cat-label">Collection</span>
+            <div class="cat-name">Men's Perfumes</div>
+            <div class="cat-btn">Explore →</div>
+          </div>
+        </div>
+        <div class="cat-card" onclick="showPage('shop');filterByCategory('Women')">
+          <img src="https://res.cloudinary.com/digbzxwkn/image/upload/v1774350411/Burburry_Women_2_plnfhm.jpg" alt="Women">
+          <div class="cat-overlay">
+            <span class="cat-label">Collection</span>
+            <div class="cat-name">Women's Perfumes</div>
+            <div class="cat-btn">Explore →</div>
+          </div>
+        </div>
+        <div class="cat-card" onclick="showPage('shop');filterByCategory('Unisex')">
+          <img src="https://res.cloudinary.com/digbzxwkn/image/upload/v1774350422/Imperial_Valley_2_fyixgf.jpg" alt="Unisex">
+          <div class="cat-overlay">
+            <span class="cat-label">Collection</span>
+            <div class="cat-name">Unisex Perfumes</div>
+            <div class="cat-btn">Explore →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEST SELLERS -->
+  <section id="bestsellers" style="padding:80px 24px;">
+    <div class="products-container">
+      <div class="section-header">
+        <span class="section-label">Top Picks</span>
+        <h2 class="section-title">Best Selling Perfumes</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="products-grid" id="bestsellers-grid"></div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews-section">
+    <div class="products-container">
+      <div class="section-header">
+        <span class="section-label">Testimonials</span>
+        <h2 class="section-title">Customer Reviews</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="reviews-inner" style="max-width:760px;margin:0 auto;">
+        <div class="review-info">
+          ✅ Only customers who have received their order should submit a review.<br>
+          💬 Your feedback helps us improve and serve you better.
+        </div>
+        <div class="reviews-embed">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeiZtzaaqAAa_cFIIrGw2WCxpUZT7po22KEUSeyvJr1pJJTIQ/viewform?embedded=true" width="100%" height="750" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end #page-home -->
+
+<!-- ═══════════════ SHOP PAGE ═══════════════ -->
+<div id="page-shop" class="page">
+  <section id="shop-page">
+    <div class="shop-inner">
+      <h1 class="shop-page-title">Our Collection</h1>
+      <p class="shop-page-sub">Premium fragrances imported from Dubai — 15–18 hour longevity</p>
+      <div class="shop-filters">
+        <button class="shop-filter-btn active" onclick="filterByCategory('All',this)">All</button>
+        <button class="shop-filter-btn" onclick="filterByCategory('Men',this)">Men</button>
+        <button class="shop-filter-btn" onclick="filterByCategory('Women',this)">Women</button>
+        <button class="shop-filter-btn" onclick="filterByCategory('Unisex',this)">Unisex</button>
+      </div>
+      <div id="shop-grid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════ ABOUT PAGE ═══════════════ -->
+<div id="page-about" class="page">
+  <section id="about-page">
+    <div class="about-inner">
+      <div class="about-hero">
+        <img src="https://res.cloudinary.com/digbzxwkn/image/upload/v1775307839/Untitled_design__2_-removebg-preview_eypquo.png" alt="YOMI">
+        <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:600;color:var(--black);margin-bottom:10px;">About YOMI</h1>
+        <p style="font-size:14px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);">Luxury in every breath</p>
+      </div>
+      <div class="about-body">
+        <div class="about-text">
+          <h2>Our Story</h2>
+          <p>Welcome to YOMI, where fragrance meets elegance.</p>
+          <p>Founded in 2023, YOMI was created with a simple vision — to bring the world of premium and luxury perfumes closer to you. We specialize in importing high-quality fragrances directly from Dubai, known globally for its rich, long-lasting, and captivating scents.</p>
+          <p>At YOMI, we believe that a perfume is more than just a scent — it's a statement of personality, confidence, and style. Every fragrance we offer is carefully selected to ensure it meets the highest standards of quality, sophistication, and uniqueness.</p>
+          <h2 style="margin-top:28px;">What We Offer</h2>
+          <p><strong>Authentic Imported Perfumes</strong> — We source our products directly from trusted suppliers in Dubai to ensure originality and excellence.</p>
+          <p><strong>Premium &amp; Luxury Collection</strong> — Our collection is designed for those who appreciate fine fragrances that leave a lasting impression.</p>
+          <p><strong>Long-Lasting Scents</strong> — Each perfume is chosen for its performance, ensuring you smell great all day.</p>
+        </div>
+        <div class="about-features">
+          <h3>Why Choose YOMI?</h3>
+          <ul>
+            <li>Trusted quality from Dubai</li>
+            <li>Carefully curated luxury perfumes</li>
+            <li>Customer-focused service</li>
+            <li>Affordable luxury experience</li>
+            <li>15–18 hour longevity</li>
+            <li>Available in 30ml &amp; 50ml</li>
+          </ul>
+          <h3 style="margin-top:28px;">Our Promise</h3>
+          <p style="font-size:13px;line-height:1.8;">At YOMI, we are committed to delivering not just perfumes, but an experience of elegance and confidence. Whether you're looking for a signature scent or something special for an occasion, we are here to help you find the perfect match.</p>
+        </div>
+        <div class="about-mission">
+          <h2>Our Mission</h2>
+          <p>Our mission is to make luxury fragrances accessible while maintaining trust, quality, and customer satisfaction. We aim to provide an unforgettable scent experience that enhances your everyday life.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════ CONTACT PAGE ═══════════════ -->
+<div id="page-contact" class="page">
+  <section id="contact-page">
+    <div class="contact-inner">
+      <div class="section-header" style="text-align:left;margin-bottom:40px;">
+        <span class="section-label">Get in Touch</span>
+        <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,42px);font-weight:600;">Contact Us</h1>
+        <div class="section-divider" style="margin:16px 0 0;"></div>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h2>YOMI — Luxury in every breath</h2>
+          <p style="font-size:13px;margin-bottom:24px;line-height:1.8;">We're here to help you. Whether you have a question about our perfumes, your order, or anything else, feel free to reach out.</p>
+          <div class="contact-info-item">
+            <span class="contact-info-icon">📧</span>
+            <div class="contact-info-text"><strong>Email</strong><br><a href="mailto:info@yomiperfume.com">info@yomiperfume.com</a></div>
+          </div>
+          <div class="contact-info-item">
+            <span class="contact-info-icon">📱</span>
+            <div class="contact-info-text"><strong>WhatsApp / Phone</strong><br><a href="https://wa.me/923170799929">+92 317 0799929</a><br><a href="https://wa.me/923315554190">+92 331 5554190</a></div>
+          </div>
+          <div class="contact-info-item">
+            <span class="contact-info-icon">📍</span>
+            <div class="contact-info-text"><strong>Location</strong><br>Pakistan</div>
+          </div>
+        </div>
+        <div class="contact-form-box">
+          <h2>Send a Message</h2>
+          <div class="checkout-form">
+            <div class="form-group"><label>Your Name</label><input type="text" id="c-name" placeholder="Full Name"></div>
+            <div class="form-group"><label>Email Address</label><input type="email" id="c-email" placeholder="you@example.com"></div>
+            <div class="form-group"><label>Message</label><textarea id="c-msg" placeholder="How can we help you?"></textarea></div>
+            <button class="contact-submit" onclick="sendContactForm()">Send Message</button>
+          </div>
+          <p style="text-align:center;margin-top:14px;font-size:12px;color:var(--gray);">Or email us directly at <a href="mailto:info@yomiperfume.com" style="color:var(--gold);">info@yomiperfume.com</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════ PRIVACY PAGE ═══════════════ -->
+<div id="page-privacy" class="page">
+  <section id="privacy-page">
+    <div class="privacy-inner">
+      <h1>Privacy Policy</h1>
+      <p class="lead">YOMI — Luxury in every breath</p>
+      <p style="font-size:14px;color:#555;margin-bottom:32px;line-height:1.9;">At YOMI, your privacy is very important to us. This Privacy Policy explains how we collect, use, and protect your information when you visit or make a purchase from our website.</p>
+      <div class="privacy-section">
+        <h2>Information We Collect</h2>
+        <p>To process your orders and provide you with the best service, we may collect the following information:</p>
+        <ul><li>Full Name</li><li>Email Address</li><li>Phone Number</li><li>Shipping Address</li></ul>
+        <p style="margin-top:10px;">This information is only collected when you place an order or contact us.</p>
+      </div>
+      <div class="privacy-section">
+        <h2>How We Use Your Information</h2>
+        <ul><li>To process and deliver your orders</li><li>To contact you regarding your order</li><li>To provide customer support</li><li>To improve our services and user experience</li></ul>
+        <p style="margin-top:10px;">We do not use your information for any unnecessary or unrelated purposes.</p>
+      </div>
+      <div class="privacy-section">
+        <h2>Data Protection &amp; Security</h2>
+        <p>Your data is safe with us. We take proper security measures to protect your personal information from unauthorized access, misuse, or loss.</p>
+      </div>
+      <div class="privacy-section">
+        <h2>No Selling or Sharing of Data</h2>
+        <ul><li>We do not sell your personal information</li><li>We do not share your data with third parties for marketing</li><li>We do not leak your information under any circumstances</li></ul>
+        <p style="margin-top:10px;">Your information is used only for order processing and communication.</p>
+      </div>
+      <div class="privacy-section">
+        <h2>Cookies</h2>
+        <p>Our website may use basic cookies to improve your browsing experience and understand how visitors use our site.</p>
+      </div>
+      <div class="privacy-section">
+        <h2>Your Rights</h2>
+        <ul><li>Request access to your personal data</li><li>Ask us to update or correct your information</li><li>Request deletion of your data</li></ul>
+        <p style="margin-top:10px;">You can contact us anytime regarding your data.</p>
+      </div>
+      <div class="privacy-section">
+        <h2>Contact Us</h2>
+        <p>If you have any questions about this Privacy Policy, feel free to <a href="#" onclick="showPage('contact')" style="color:var(--gold);">contact us</a>.</p>
+      </div>
+      <p style="text-align:center;margin-top:40px;font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--espresso);font-style:italic;">YOMI — Luxury in every breath</p>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="https://res.cloudinary.com/digbzxwkn/image/upload/v1775307839/Untitled_design__2_-removebg-preview_eypquo.png" alt="YOMI">
+        <p>Premium luxury perfumes imported directly from Dubai. Crafted for those who appreciate the finer things in life.</p>
+        <div class="footer-social">
+          <a class="social-link" href="https://www.instagram.com/yomi.perfume?igsh=MXcyNWFhdW45bm04bw==" target="_blank" title="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a class="social-link" href="https://www.facebook.com/share/1AGaHTEFeg/" target="_blank" title="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a class="social-link" href="https://wa.me/923170799929" target="_blank" title="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('shop')">Shop</a>
+        <a onclick="showPage('about')">About Us</a>
+        <a onclick="showPage('contact')">Contact Us</a>
+        <a onclick="showPage('privacy')">Privacy Policy</a>
+      </div>
+      <div class="footer-col">
+        <h4>Customer Support</h4>
+        <a onclick="openModal('faq-modal')">FAQs</a>
+        <a onclick="openModal('shipping-modal')">Shipping Policy</a>
+        <a onclick="openModal('return-modal')">Return Policy</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Info</h4>
+        <p>📧 <a href="mailto:info@yomiperfume.com" style="color:rgba(232,217,200,.7);text-decoration:none;">info@yomiperfume.com</a></p>
+        <p>📞 <a href="tel:+923170799929" style="color:rgba(232,217,200,.7);text-decoration:none;">+92 317 0799929</a></p>
+        <p>📞 <a href="tel:+923315554190" style="color:rgba(232,217,200,.7);text-decoration:none;">+92 331 5554190</a></p>
+        <p>📍 Pakistan</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2024 YOMI. All Rights Reserved. | Luxury In Every Breath
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a class="wa-float" href="https://wa.me/923170799929" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  WhatsApp
+</a>
+
+<!-- Notifications -->
+<div id="notif"></div>
+
+<!-- CART OVERLAY + SIDEBAR -->
+<div id="cart-overlay" onclick="toggleCart()"></div>
+<div id="cart-sidebar">
+  <div class="cart-header">
+    <span class="cart-title">Your Cart</span>
+    <button class="cart-close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items-container">
+    <div class="cart-empty">Your cart is empty.<br>Add some fragrances!</div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-val">Rs. <span id="cart-total">0</span></span>
+    </div>
+    <button class="cart-checkout-btn" onclick="openCheckout()">Proceed to Checkout</button>
+    <button class="cart-wa-btn" onclick="sendCartViaWhatsApp()">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Order via WhatsApp
+    </button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkout-modal">
+  <div class="checkout-box">
+    <div class="checkout-header">
+      <h2>Complete Your Order <button class="checkout-close" onclick="closeCheckout()">✕</button></h2>
+    </div>
+    <div class="checkout-body">
+      <div class="checkout-payment">
+        <p><strong>💳 Payment Method:</strong><br>EasyPaisa / JazzCash: <strong>03170799929</strong><br>Please send payment and share screenshot on WhatsApp after placing your order.</p>
+      </div>
+      <div class="checkout-order-summary">
+        <h4>Order Summary</h4>
+        <div id="checkout-order-list"></div>
+        <div id="checkout-order-total"></div>
+      </div>
+      <div class="checkout-form">
+        <div class="form-group"><label>Full Name *</label><input type="text" id="o-name" placeholder="Your full name"></div>
+        <div class="form-group"><label>Phone Number *</label><input type="tel" id="o-phone" placeholder="+92 3XX XXXXXXX"></div>
+        <div class="form-group"><label>Alt. Phone (Optional)</label><input type="tel" id="o-phone2" placeholder="Another number"></div>
+        <div class="form-group"><label>Email Address *</label><input type="email" id="o-email" placeholder="you@example.com"></div>
+        <div class="form-group"><label>Shipping Address *</label><textarea id="o-address" placeholder="Full delivery address" style="min-height:80px;"></textarea></div>
+        <button class="checkout-place-btn" onclick="placeOrder()">✓ Place Order</button>
+        <button class="checkout-wa-btn" onclick="sendCartViaWhatsApp()">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Order via WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="product-modal" onclick="closeProductModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('product-modal')">✕</button>
+    <img id="modal-img" class="modal-img" src="" alt="">
+    <div class="modal-body">
+      <div class="modal-cat" id="modal-cat"></div>
+      <div class="modal-name" id="modal-name"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-tags" id="modal-tags"></div>
+      <div class="modal-price" id="modal-price"></div>
+      <div class="modal-sizes" id="modal-sizes">
+        <button class="modal-size-btn sel" data-size="50ml" data-price="3500" onclick="selectModalSize(this)">50ml — Rs. 3,500</button>
+        <button class="modal-size-btn" data-size="30ml" data-price="2200" onclick="selectModalSize(this)">30ml — Rs. 2,200</button>
+      </div>
+      <button class="modal-add-btn" onclick="addModalToCart()">Add to Cart</button>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ MODAL -->
+<div class="modal-overlay" id="faq-modal" onclick="closeProductModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()" style="max-width:780px;">
+    <button class="modal-close" onclick="closeModal('faq-modal')">✕</button>
+    <div class="modal-body">
+      <div class="modal-cat">Support</div>
+      <div class="modal-name" style="margin-bottom:24px;">Frequently Asked Questions</div>
+      <div class="faq-item"><div class="faq-q">Do you offer Cash on Delivery (COD)?</div><div class="faq-a">Currently, we do not offer COD. Please use EasyPaisa or JazzCash (03170799929) at checkout.</div></div>
+      <div class="faq-item"><div class="faq-q">How long will it take to receive my order?</div><div class="faq-a">Shipping times may vary depending on your location. You will receive tracking details once your order is shipped.</div></div>
+      <div class="faq-item"><div class="faq-q">How can I contact customer support?</div><div class="faq-a">Email us at <strong>info@yomiperfume.com</strong> or WhatsApp at <strong>+92 317 0799929</strong> or <strong>+92 331 5554190</strong>.</div></div>
+      <div class="faq-item"><div class="faq-q">What sizes are available?</div><div class="faq-a">All perfumes are available in two sizes: 30ml (Rs. 2,200) and 50ml (Rs. 3,500).</div></div>
+      <div class="faq-item"><div class="faq-q">Where are your perfumes sourced from?</div><div class="faq-a">All YOMI perfumes are directly imported from Dubai, ensuring authenticity and premium quality.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SHIPPING MODAL -->
+<div class="modal-overlay" id="shipping-modal" onclick="closeProductModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('shipping-modal')">✕</button>
+    <div class="modal-body">
+      <div class="modal-cat">Policy</div>
+      <div class="modal-name" style="margin-bottom:20px;">Shipping Policy</div>
+      <div class="policy-section">
+        <p>Shipping charges vary for each order depending on the delivery location and package size. We use reliable courier services to ensure your perfume arrives safely.</p>
+        <ul style="margin-top:12px;">
+          <li>You will receive a tracking number via email or WhatsApp once your order is shipped.</li>
+          <li>Please make sure your delivery address is correct to avoid delays.</li>
+          <li>Free shipping on orders above Rs. 5,500.</li>
+          <li>We ship across all of Pakistan.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RETURN MODAL -->
+<div class="modal-overlay" id="return-modal" onclick="closeProductModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('return-modal')">✕</button>
+    <div class="modal-body">
+      <div class="modal-cat">Policy</div>
+      <div class="modal-name" style="margin-bottom:20px;">Return Policy</div>
+      <div class="policy-section">
+        <ul>
+          <li>Returns are accepted within 1–2 days of delivery.</li>
+          <li>To request a return, provide clear photo or video evidence showing the issue (e.g., damaged bottle, wrong product).</li>
+          <li>Only products meeting these criteria are eligible for a replacement or refund.</li>
+          <li>Refunds (if applicable) will be processed after verification of the evidence.</li>
+          <li>We currently do not accept returns without proof.</li>
+        </ul>
+        <p style="margin-top:14px;">Contact us at <strong>info@yomiperfume.com</strong> to initiate a return.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Application Script -->
+<script src="app.js"></script>
+</body>
+</html>
